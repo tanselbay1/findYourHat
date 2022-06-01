@@ -54,7 +54,10 @@ class Field {
     }
   }
   checkGame() {
-    if (this.fieldArr[this.yLocation][this.xLocation] === hat) {
+    if (this.isOutsideRange()) {
+      console.log("Field finished..You dropped out and game over!");
+      return false;
+    } else if (this.fieldArr[this.yLocation][this.xLocation] === hat) {
       console.log("Congratulations..You find the hat!");
       return false;
     } else if (this.fieldArr[this.yLocation][this.xLocation] === hole) {
@@ -62,6 +65,18 @@ class Field {
       return false;
     } else {
       return true;
+    }
+  }
+
+  isOutsideRange() {
+    if (this.xLocation < 0 || this.yLocation < 0) {
+      return true;
+    } else if (this.xLocation > this.fieldArr[0].length - 1) {
+      return true;
+    } else if (this.yLocation > this.fieldArr.length - 1) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
