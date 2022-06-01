@@ -43,12 +43,22 @@ class Field {
         console.log("not a valid enter!");
         break;
     }
-    this.fieldArr[this.yLocation][this.xLocation] = pathCharacter;
-    myField.print();
+
+    // Check before moving permanently
+    let canMove = this.checkGame();
+    if (canMove) {
+      this.fieldArr[this.yLocation][this.xLocation] = pathCharacter;
+      return true;
+    } else {
+      return false;
+    }
   }
   checkGame() {
-    if ((this.fieldArr[this.yLocation][this.xLocation] = hat)) {
+    if (this.fieldArr[this.yLocation][this.xLocation] === hat) {
       console.log("Congratulations..You find the hat!");
+      return false;
+    } else {
+      return true;
     }
   }
 }
@@ -69,7 +79,10 @@ while (isGameRunning) {
   // Validating if they entered a valid input
   const re = /u|d|l|r|q/;
   if (re.test(res)) {
-    myField.moving(res);
-    res === "q" ? (isGameRunning = false) : console.log("game continuous!");
+    let tryMoving = myField.moving(res);
+    if (!tryMoving || res === "q") {
+      isGameRunning = false;
+    }
+    myField.print();
   }
 }
