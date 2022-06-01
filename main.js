@@ -14,6 +14,7 @@ class Field {
     this.yLocation = 0;
     //  this.currLocation = this.fieldArr[this.yLocation][this.xLocation];
   }
+
   print() {
     this.fieldArr.map((arr) => {
       console.log(arr.join(""));
@@ -40,7 +41,6 @@ class Field {
         this.yLocation -= 1;
         break;
       default:
-        console.log("not a valid enter!");
         break;
     }
 
@@ -56,6 +56,9 @@ class Field {
   checkGame() {
     if (this.fieldArr[this.yLocation][this.xLocation] === hat) {
       console.log("Congratulations..You find the hat!");
+      return false;
+    } else if (this.fieldArr[this.yLocation][this.xLocation] === hole) {
+      console.log("Oh..no! You dropped into a hole");
       return false;
     } else {
       return true;
@@ -84,5 +87,7 @@ while (isGameRunning) {
       isGameRunning = false;
     }
     myField.print();
+  } else {
+    console.log("not a valid enter!");
   }
 }
