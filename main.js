@@ -112,7 +112,7 @@ class Field {
     return generatedField;
   }
 }
-
+// Dummy field (Keeping for testing reasons)
 // const myField = new Field([
 //   ["*", "░", "O"],
 //   ["░", "O", "░"],
@@ -120,22 +120,39 @@ class Field {
 // ]);
 
 let isGameRunning = true;
+console.log(
+  "Instructions:\
+  \n- First enter required measures(Height and Width)\
+   \n- Choose a difficulty from 1 to 100\
+    \n- Move your character:* with u=Up, d=Down, l=Left, r=Right\
+     \n^ is your hat and you need to find and get it\
+      \no is a hole(stay away from them)\
+       \n- A quick note: If you move outside of the field you lose!"
+);
+let userHeight = prompt("Height: ");
+let userWidth = prompt("Width: ");
+let userPercentage = prompt(
+  "Difficulty? Please enter a number from 1 to 100: "
+);
+const myField = new Field(
+  Field.generateField(userHeight, userWidth, userPercentage)
+);
 
-// while (isGameRunning) {
-//   let res = myField.askUser();
+while (isGameRunning) {
+  console.log(myField.print());
+  let res = myField.askUser();
 
-//   // Validating if they entered a valid input
-//   const re = /u|d|l|r|q/;
-//   if (re.test(res)) {
-//     let tryMoving = myField.moving(res);
-//     if (!tryMoving || res === "q") {
-//       isGameRunning = false;
-//     }
-//     myField.print();
-//   } else {
-//     console.log("not a valid enter!");
-//   }
-// }
+  // Validating if they entered a valid input
+  const re = /u|d|l|r|q/;
+  if (re.test(res)) {
+    console.clear();
+    let tryMoving = myField.moving(res);
 
-const myBetterField = new Field(Field.generateField(10, 14, 35));
-console.log(myBetterField.print());
+    // Cheat code:q for exiting the game
+    if (!tryMoving || res === "q") {
+      isGameRunning = false;
+    }
+  } else {
+    console.log("not a valid enter!");
+  }
+}
