@@ -1,7 +1,7 @@
+// Node user input prompt, sigint:true for exit
 const prompt = require("prompt-sync")({ sigint: true });
-// const name = prompt('What is your name?');
-// console.log(`Hey there ${name}`);
 
+// Characters of the game
 const hat = "^";
 const hole = "O";
 const fieldCharacter = "░";
@@ -12,13 +12,10 @@ class Field {
     this.fieldArr = fieldArr;
     this.xLocation = 0;
     this.yLocation = 0;
-    //  this.currLocation = this.fieldArr[this.yLocation][this.xLocation];
   }
 
   print() {
-    this.fieldArr.map((arr) => {
-      console.log(arr.join(""));
-    });
+    return this.fieldArr.map((row) => row.join("")).join("\n");
   }
   askUser() {
     // Asking user which direction they want to go
@@ -79,30 +76,66 @@ class Field {
       return false;
     }
   }
+
+  static generateField(height, width, percentage) {
+    const hatPosition = {
+      y: Math.floor(Math.random() * height),
+      x: Math.floor(Math.random() * width),
+    };
+
+    // Generate a dummy array correlating with height and width
+    let generatedField = new Array(height);
+    for (let i = 0; i < height; i++) {
+      generatedField[i] = new Array(width);
+    }
+
+    // Helper function for generating holes due to percentage value
+    const createHoles = (difficulty) => {
+      const number = Math.floor(Math.random() * 100);
+      const holeOrNot = number > difficulty ? fieldCharacter : hole;
+      return holeOrNot;
+    };
+
+    // Fill all the field with field character or holes
+    for (let j = 0; j < height; j++) {
+      for (let i = 0; i < width; i++) {
+        generatedField[j][i] = createHoles(percentage);
+      }
+    }
+
+    // Starting position
+    generatedField[0][0] = pathCharacter;
+
+    // Add +1 to make sure hat doesn't appear on starting position
+    generatedField[hatPosition.y + 1][hatPosition.x + 1] = hat;
+    //  console.log(generatedField);
+    return generatedField;
+  }
 }
 
-const myField = new Field([
-  ["*", "░", "O"],
-  ["░", "O", "░"],
-  ["░", "^", "░"],
-]);
-
-myField.print();
+// const myField = new Field([
+//   ["*", "░", "O"],
+//   ["░", "O", "░"],
+//   ["░", "^", "░"],
+// ]);
 
 let isGameRunning = true;
 
-while (isGameRunning) {
-  let res = myField.askUser();
+// while (isGameRunning) {
+//   let res = myField.askUser();
 
-  // Validating if they entered a valid input
-  const re = /u|d|l|r|q/;
-  if (re.test(res)) {
-    let tryMoving = myField.moving(res);
-    if (!tryMoving || res === "q") {
-      isGameRunning = false;
-    }
-    myField.print();
-  } else {
-    console.log("not a valid enter!");
-  }
-}
+//   // Validating if they entered a valid input
+//   const re = /u|d|l|r|q/;
+//   if (re.test(res)) {
+//     let tryMoving = myField.moving(res);
+//     if (!tryMoving || res === "q") {
+//       isGameRunning = false;
+//     }
+//     myField.print();
+//   } else {
+//     console.log("not a valid enter!");
+//   }
+// }
+
+const myBetterField = new Field(Field.generateField(10, 14, 35));
+console.log(myBetterField.print());
