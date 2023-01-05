@@ -9,7 +9,7 @@ In this project, you’ll be building an interactive terminal game. The scenario
 ## Instructions:
 + First enter required measures(Height and Width)
 + Choose a difficulty from 1 to 100
-+ Move your character:* with u=Up, d=Down, l=Left, r=Right
++ Move your character:* with <kbd>u</kbd> = Up, <kbd>d</kbd> =Down, <kbd>l</kbd> = Left, <kbd>r</kbd> = Right
 + ^ is your hat and you need to find and get it
 + o is a hole(stay away from them)
 + A quick note: If you move outside of the field you lose!
